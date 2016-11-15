@@ -4,7 +4,7 @@
 
 <br><p class = "textcolor2">
 
-<center>Alright, <%= player_1_name%>, lets do this.</center>
+Alright, <%= player_1_name
 <form action="get_player_move" method="post">
             <table id='board'><center>
             	<tr>

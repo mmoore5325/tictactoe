@@ -1,16 +1,16 @@
 class Board
-    attr_accessor :board
+    attr_accessor :grid
+
+    def initialize(gridsize)
+        @grid = Array.new(gridsize * gridsize, "")
+    end
+
+    def update(position, marker)
+        @grid[position.to_i] = marker
+    end
     
-    def initialize
-        @board = Array.new(9, "")
-    end
-
-    def update(position, symbol)
-        @board[position.to_i] = symbol
-    end
-
-    def valid_position?(position)
-        if board[position.to_i] != ""
+    def valid_space?(position)
+        if @grid[position] == "X" || @grid[position] == "O"
             false
         else
             true
@@ -18,25 +18,26 @@ class Board
     end
 
     def valid_input?(position)
-        if position.to_i >= 1 && position.to_i <= 9 && position =~ (/\d/)
-            true
+        if position.to_i >= 1 && position.to_i <= grid.length  && position =~ (/^(\d)+$/) 
+            true          
         else
             false
         end
     end
 
     def full_board?
-        board.count("") == 0
+        grid.count("") == 0        
     end
 
-    def winner?(symbol)
-        board[0] == symbol && board[1] == symbol && board[2] == symbol ||
-        board[3] == symbol && board[4] == symbol && board[5] == symbol ||
-        board[6] == symbol && board[7] == symbol && board[8] == symbol ||
-        board[0] == symbol && board[3] == symbol && board[6] == symbol ||
-        board[1] == symbol && board[4] == symbol && board[7] == symbol ||
-        board[2] == symbol && board[5] == symbol && board[8] == symbol ||
-        board[0] == symbol && board[4] == symbol && board[8] == symbol ||
-        board[2] == symbol && board[4] == symbol && board[6] == symbol
+
+    def winner?(marker)
+        grid[0] == marker && grid[1] == marker && grid[2] == marker ||
+        grid[3] == marker && grid[4] == marker && grid[5] == marker ||
+        grid[6] == marker && grid[7] == marker && grid[8] == marker ||
+        grid[0] == marker && grid[3] == marker && grid[6] == marker ||
+        grid[1] == marker && grid[4] == marker && grid[7] == marker ||
+        grid[2] == marker && grid[5] == marker && grid[8] == marker ||
+        grid[0] == marker && grid[4] == marker && grid[8] == marker ||
+        grid[2] == marker && grid[4] == marker && grid[6] == marker
     end
 end

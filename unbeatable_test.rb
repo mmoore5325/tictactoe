@@ -46,9 +46,14 @@ class TestUnbeatable < Minitest::Test
 		assert_equal(2, player.get_move(["x", "", "", "", "o", "", "", "", ""]))
 	end
 
-	def test_block_fork
+	# def test_block_fork
+	# 	player = UnbeatableAi.new("o")
+	# 	assert_equal(1, player.get_move(["x", "", "", "", "o", "", "", "", "x"]))
+	# end
+
+	def test_for_empty_border
 		player = UnbeatableAi.new("o")
-		assert_equal(1, player.get_move(["x", "", "", "", "o", "", "", "", "x"]))
+		assert_equal(7, player.get_move(["x", "", "", "", "o", "", "", "", "x"]))
 	end
 
 end

@@ -1,46 +1,47 @@
-require_relative "board.rb"
-require_relative "console_human.rb"
-require_relative "random_ai.rb"
-require_relative "sequential_ai.rb"
-require_relative "unbeatable_ai.rb"
+    require_relative 'board.rb'
+    require_relative 'console_human.rb'
+    require_relative 'console_random_ai.rb'
+    require_relative 'console_sequential_ai.rb'
+    require_relative 'unbeatable_ai.rb'
 
-class Game
+class Console_game
+
     attr_accessor :board, :player_1, :player_2, :current_player
 
     def initialize
         @board = Board.new
-        @player_1 = Human.new("x")
-        @player_2 = select_player_2
+        @player_1 = Console_human.new("X")
+        @player_2 = who_plays
         @current_player = player_2
     end
 
-    def select_player_2
+    def who_plays
         puts """
-            Who would you like to play against?
-            Press   1 - Human
-                    2 - Random AI
-                    3 - Sequential AI
-                    4 - Unbeatable AI
-                    
-            Then ENTER!
+        Who are you playing against? (select one)
+
+        1. Human player
+        2. Random
+        3. Sequential
+        4. Unbeatable
         """
-        who = {1 => Human, 2 => RandomAi, 3 => SequentialAi, 4=> UnbeatableAi}
-        choice = gets.chomp.to_i
-        player = who[choice].new("o")    
+        who = {1 => Console_human, 2 => RandomAI, 3 => SequentialAI, 4 => UnbeatableAI}
+        player_choice = gets.chomp.to_i
+        player = who[player_choice].new("O")
     end
 
     def change_player
-        if current_player == player_1
-            @current_player = player_2
+          if @current_player == player_1
+           @current_player = player_2
         else
             @current_player = player_1
         end
     end
 
-    def print_board
-        puts """
+    def draw_board
+    puts """
         
     Let's get started!
+
     Sample board with numbers:
         
      1 | 2 | 3
@@ -51,111 +52,37 @@ class Game
         
     Game Board:
         
-    #{board.board[0]} | #{board.board[1]} | #{board.board[2]}
-    ---------
-    #{board.board[3]} | #{board.board[4]} | #{board.board[5]}
-    ---------
-    #{board.board[6]} | #{board.board[7]} | #{board.board[8]}
+     #{board.grid[0]} | #{board.grid[1]} | #{board.grid[2]}
+    -----------
+     #{board.grid[3]} | #{board.grid[4]} | #{board.grid[5]}
+    -----------
+     #{board.grid[6]} | #{board.grid[7]} | #{board.grid[8]}
+
     #{current_player.marker} --- Its your move
         
         """
     end
 
     def get_move
-        current_player.get_move(board.board)
+        current_player.get_move(board.grid)
     end
 
     def make_move(move)
         board.update(move, current_player.marker)
     end
 
-    def game_over?
-        board.winner?(current_player.marker) ||  board.full_board?        
+    def game_over?        
+            board.winner?(current_player.marker) || board.full_board?
     end
 
     def end_message
-        if board.winner?(current_player.marker)
-            puts "#{current_player.marker} wins!"
+        if 
+            board.winner?(current_player.marker)
+            puts "#{current_player.marker} is the winner!"
         else
             board.full_board?
-            puts  "You tied!"
+            puts "It's a tie!"
         end
     end
+
 end
-
-# require_relative "console_cpu_sequence.rb"
-# require_relative "console_cpu_random.rb"
-
-
-# class Game
-
-# 	attr_accessor :board, :player1, :player2, :current_player
-
-# 	def initialize(player1, player2)
-# 		@board = Board.new
-# 		@player1 = player1
-# 		@player2 = player2
-# 		@current_player = player2
-# 	end
-
-# 	def print_board
-
-# 		puts ""
-# 		puts "\t\t\t\t\t\t #{board.board[0]} | #{board.board[1]} | #{board.board[2]}"
-# 		puts "\t\t\t\t\t\t--------"
-# 		puts "\t\t\t\t\t\t #{board.board[3]} | #{board.board[4]} | #{board.board[5]}"
-# 		puts "\t\t\t\t\t\t--------"
-# 		puts "\t\t\t\t\t\t #{board.board[6]} | #{board.board[7]} | #{board.board[8]}"
-# 		puts ""
-# 		puts ""
-# 		puts "#{current_player.marker} --- Its your turn."
-
-# 	end
-
-# 	def get_move
-# 		current_player.get_move(board.board)
-# 	end
-
-# 	def make_move(move)
-# 		board.update(move, current_player.marker)
-# 	end
-
-# 	def game_over?
-# 		board.winner?(current_player.marker) || board.full_board?
-
-# 	end
-
-# 	def end_message
-# 		if board.winner?(current_player.marker)
-# 			puts "#{current_player.marker} wins!"
-# 		else
-# 			board.full_board?
-# 			puts "tie!"
-# 		end
-# 	end
-
-# 	def make_seq_move(move)
-
-# 		cpu = move + 1
-# 		unless board.valid_space?(cpu) == ""
-# 			make_seq_move(cpu)
-# 		end
-# 		# if cpu >= 9
-# 		# 	cpu = 0
-# 		# end
-# 	end
-
-
-
-# 	def change_player
-# 		if current_player == player1
-# 			@current_player = player2
-# 		elsif current_player == player2
-# 			@current_player = player1
-			
-# 		end
-# 	end
-
-
-
-# end

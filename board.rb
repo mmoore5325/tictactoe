@@ -2,7 +2,7 @@ class Board
     attr_accessor :grid
 
     def initialize(gridsize)
-        @grid = Array.new(gridsize * gridsize, "")
+        @grid = Array.new(gridsize, ""){Array.new(gridsize, "")}
     end
 
     def update(position, marker)
@@ -31,6 +31,10 @@ class Board
 
 
     def winner?(marker)
+       i = 0
+       while i < gridsize
+       grid[i].each do |win_check|
+            
         grid[0] == marker && grid[1] == marker && grid[2] == marker ||
         grid[3] == marker && grid[4] == marker && grid[5] == marker ||
         grid[6] == marker && grid[7] == marker && grid[8] == marker ||
@@ -41,3 +45,12 @@ class Board
         grid[2] == marker && grid[4] == marker && grid[6] == marker
     end
 end
+
+# grid[0] == marker && grid[1] == marker && grid[2] == marker ||
+#         grid[3] == marker && grid[4] == marker && grid[5] == marker ||
+#         grid[6] == marker && grid[7] == marker && grid[8] == marker ||
+#         grid[0] == marker && grid[3] == marker && grid[6] == marker ||
+#         grid[1] == marker && grid[4] == marker && grid[7] == marker ||
+#         grid[2] == marker && grid[5] == marker && grid[8] == marker ||
+#         grid[0] == marker && grid[4] == marker && grid[8] == marker ||
+#         grid[2] == marker && grid[4] == marker && grid[6] == marker
